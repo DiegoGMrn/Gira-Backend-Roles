@@ -15,6 +15,16 @@ export class AppService {
   constructor(@Inject('ROLES_SERVICE') private client: ClientProxy,
   @InjectRepository(Roles) private readonly rolesRepository: Repository<Roles>,private readonly jwtService: JwtService,){}
   
+  async showInfoRoles(correoT: string): Promise<{ id: number,nombre: string}[] | null> {
+    const correoCreador = correoT;
+    const roles = await this.rolesRepository.find();
+  
+    if (roles) {
+      return roles.map((roles) => ({ id: roles.id,nombre: roles.name}));
+    }
+  
+    return null; 
+  }
   
   
   
